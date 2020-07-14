@@ -1,7 +1,5 @@
 package com.geekbrains.java.course;
 
-import org.w3c.dom.ls.LSOutput;
-
 public class Main {
 
     //1
