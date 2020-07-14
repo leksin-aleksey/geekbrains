@@ -45,7 +45,7 @@ public class Main {
     }
 
     private static String checkNumberSign(int s){
-        return s > 0 ? "Positive" : "Negative";
+        return s >= 0 ? "Positive" : "Negative";
     }
 
     private static boolean checkNumberNegative(int s){
