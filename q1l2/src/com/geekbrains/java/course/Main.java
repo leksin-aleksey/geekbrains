@@ -89,8 +89,8 @@ public class Main {
             if(sumChanged != sumLeft > sumRight) return false;
             if (sumLeft > sumRight) {
                 if (--pos == 0) return false;
-                sumLeft -= array6[pos - 1];
-                sumRight += array6[pos - 1];
+                sumLeft -= array6[pos];
+                sumRight += array6[pos];
             } else {
                 if (++pos == array6.length) return false;
                 sumLeft += array6[pos - 1];
