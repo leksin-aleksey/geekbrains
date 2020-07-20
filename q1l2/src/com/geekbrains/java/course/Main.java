@@ -75,6 +75,7 @@ public class Main {
 
     private static boolean checkBalance(int[] array6){
         if(array6.length == 0 || array6.length == 1) return false;
+        if(array6.length <= 1) return false;
 
         int pos = array6.length / 2;
         int sumLeft, sumRight;
