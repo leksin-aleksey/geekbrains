@@ -21,9 +21,13 @@ public class Main {
         lookupMinMax();
 
         //6
-//        int[] array6 = {2, 2, 2, 1, 2, 2, 10, 1};
-        int[] array6 = {-7, 3 ,4, 1, 1, 1, 2, 5};
+        int[] array6 = {-7, 3 ,4, 1, 1, 1, 2, 6};
         checkBalance(array6);
+
+        //7
+        int[] array7 = {1, 2, 3, 4, 5, 6};
+        int n = 3;
+        int[] array7Result = moveElements(array7, n);
     }
 
     private static void createAndChange(){
@@ -32,7 +36,6 @@ public class Main {
         for(int i = 0; i < array1.length; i++){
             array1[i] = (array1[i] == 0 ? (byte)1 : 0);
         }
-        System.out.println(Arrays.toString(array1));
     }
 
     private static void createAndFill(){
@@ -40,7 +43,6 @@ public class Main {
         for(int i = 0; i < array2.length; i++){
             array2[i] = i * 3;
         }
-        System.out.println(Arrays.toString(array2));
     }
 
     private static void createAndMultiplyCond(){
@@ -49,7 +51,6 @@ public class Main {
         for(int i = 0; i < array3.length; i++){
             if(array3[i] < 6) array3[i] *= 2;
         }
-        System.out.println(Arrays.toString(array3));
     }
 
     private static void createUnitMatrix(){
@@ -82,43 +83,46 @@ public class Main {
             if(i < pos) sumLeft += array6[i];
             else sumRight += array6[i];
         }
-        System.out.println(pos);
-        System.out.println(sumLeft + " " + sumRight);
 
+        boolean sumChanged = sumLeft > sumRight;
         while(sumLeft != sumRight) {
+            if(sumChanged != sumLeft > sumRight) return false;
             if (sumLeft > sumRight) {
-//                pos--;
                 if (--pos == 0) return false;
                 sumLeft -= array6[pos - 1];
                 sumRight += array6[pos - 1];
             } else {
-//                pos++;
-                if (pos++ == array6.length - 1) return false;
+                if (++pos == array6.length) return false;
                 sumLeft += array6[pos - 1];
                 sumRight -= array6[pos - 1];
             }
         }
         return true;
+    }
 
-//            if(pos == 0 || pos == array6.length-1) return false;
-//
-//            if(sumLeft > sumRight){
-//                sumLeft -= array6[pos-1];
-//                sumRight += array6[pos-1];
-//            }
-//            else{
-//                sumLeft += array6[pos-1];
-//                sumRight -= array6[pos-1];
-//            }
-//        }
+    private static int[] moveElements(int[] array7, int n){
 
+        int len = array7.length;
+        int diff = n % len;
 
-//        do{
-//            if(sumLeft == sumRight) return true;
-//            if(sumLeft > sumRight)
-//        }
-//        while (pos >= 0 && pos < array6.length);
+        if(diff == 0) return array7;
 
-//        return false;
+        int iterNum;
+        if(len % Math.abs(diff) != 0) iterNum = 1;
+        else iterNum = Math.abs(diff);
+
+        int valueTemp;
+        for(int iter = 0; iter < iterNum; iter++){
+            int indx = (iter + diff + len) % len;
+            int valuePrev = array7[iter];
+            do{
+                valueTemp = array7[indx];
+                array7[indx] = valuePrev;
+                valuePrev = valueTemp;
+                indx = (indx + diff + len) % len;
+            }
+            while(indx != (iter + diff + len) % len);
+        }
+        return array7;
     }
 }
