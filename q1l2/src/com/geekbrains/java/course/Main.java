@@ -104,6 +104,8 @@ public class Main {
     private static int[] moveElements(int[] array7, int n){
 
         int len = array7.length;
+        if(len <= 1) return array7;
+
         int diff = n % len;
 
         if(diff == 0) return array7;
@@ -111,6 +113,9 @@ public class Main {
         int iterNum;
         if(len % Math.abs(diff) != 0) iterNum = 1;
         else iterNum = Math.abs(diff);
+        int diffMin = Math.min(Math.abs(diff), len - Math.abs(diff));
+        if(len % diffMin != 0) iterNum = 1;
+        else iterNum = diffMin;
 
         int valueTemp;
         for(int iter = 0; iter < iterNum; iter++){
