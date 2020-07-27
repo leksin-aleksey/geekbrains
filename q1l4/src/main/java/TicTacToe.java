@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe {
@@ -22,7 +23,7 @@ public class TicTacToe {
 
         drawField(field);
 
-        //the human-player makes turns first
+        //the human-player moves first
         int turnNumber = 0;
 
         GameStatus gameStatus;
@@ -32,7 +33,7 @@ public class TicTacToe {
                 field = doPlayerMove(field, playerSign);
             }
             else{
-                field = doAIMove(field, computerSign);
+                field = doAIMove(field, turnNumber, computerSign, playerSign);
             }
             drawField(field);
             turnNumber++;
@@ -94,10 +95,50 @@ public class TicTacToe {
         return true;
     }
 
-    private static char[][] doAIMove(char[][] field, char playerSign){
-        /*TODO*/
-        return doPlayerMove(field, playerSign);
-//        return field;
+    private static char[][] doAIMove(char[][] field, int turnNumber, char computerSign, char playerSign) {
+        Random random = new Random();
+        System.out.println("Computer's move...");
+
+        int xVal, yVal;
+        xVal = yVal = -1;
+
+        //5
+        if(turnNumber >= 2){
+            for(int i = 0; i < field.length; i++){
+                for(int j = 0; j < field.length; j++){
+                    if(field[i][j] == '-'){
+                        if(field[i][(j + field.length - 1) % field.length] == playerSign &&
+                            field[i][(j + field.length + 1) % field.length] == playerSign){
+                            xVal = i;
+                            yVal = j;
+                        }
+                    }
+                    if(xVal != -1){
+                        break;
+                    }
+                }
+                if(xVal != -1){
+                    break;
+                }
+            }
+        }
+        if(xVal == -1){
+            // Вводим координаты Х, Y
+            xVal = random.nextInt(3);
+            yVal = random.nextInt(3);
+
+            // Если значение по координатам занято, то делаем перегенерацию координат, пока не найдем свободные
+            while (field[xVal][yVal] != '-') {
+                xVal = random.nextInt(3);
+                yVal = random.nextInt(3);
+            }
+        }
+
+        System.out.println(String.format("Computer's X-value: %s", xVal));
+        System.out.println(String.format("Computer's Y-value: %s", yVal));
+
+        field[xVal][yVal] = computerSign;
+        return field;
     }
 
     private static GameStatus getGameStatus(char[][] field, int turnNumber, char playerSign, char computerSign){
