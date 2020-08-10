@@ -11,7 +11,7 @@ public class Cat {
         this.appetite = appetite;
     }
 
-    public void eat(Plate p){
+    public void eat(Plate p) throws NotPositiveFoodAmount{
         try {
             p.decreaseFood(appetite);
             //3

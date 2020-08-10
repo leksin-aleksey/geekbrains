@@ -7,7 +7,11 @@ public class Plate {
         this.food = food;
     }
 
-    public void decreaseFood(int n) throws InsufficientPlateResourcesException{
+    public void decreaseFood(int n) throws InsufficientPlateResourcesException, NotPositiveFoodAmount{
+        if(Integer.signum(n) != 1){
+            throw new NotPositiveFoodAmount();
+        }
+
         if(food >= n){
             food -= n;
         }
@@ -18,9 +22,12 @@ public class Plate {
     }
 
     //6
-    public void increaseFood(int n){
+    public void increaseFood(int n) throws NotPositiveFoodAmount{
         if(Integer.signum(n) == 1) {
             food += n;
+        }
+        else{
+            throw new NotPositiveFoodAmount();
         }
     }
 

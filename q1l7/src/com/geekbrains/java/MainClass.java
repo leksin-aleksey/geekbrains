@@ -2,7 +2,7 @@ package com.geekbrains.java;
 
 public class MainClass {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws NotPositiveFoodAmount{
         Cat[] cats = new Cat[5];
 
         Cat cat0 = new Cat("Barsik", 5);
