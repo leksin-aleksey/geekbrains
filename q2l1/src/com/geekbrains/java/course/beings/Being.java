@@ -1,6 +1,9 @@
 package com.geekbrains.java.course.beings;
 
-public abstract class Being {
+import com.geekbrains.java.course.actions.Jumpable;
+import com.geekbrains.java.course.actions.Runnable;
+
+public abstract class Being implements Runnable, Jumpable {
     private final String name;
     private final int maxLength, maxHeight;
 

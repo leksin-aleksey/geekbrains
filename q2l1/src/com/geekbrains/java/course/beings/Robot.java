@@ -3,7 +3,7 @@ package com.geekbrains.java.course.beings;
 import com.geekbrains.java.course.actions.Jumpable;
 import com.geekbrains.java.course.actions.Runnable;
 
-public class Robot extends Being implements Runnable, Jumpable {
+public class Robot extends Being {
 
     public Robot(String name, int maxLength, int maxHeight) {
         super(name, maxLength, maxHeight);

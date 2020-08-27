@@ -3,7 +3,7 @@ package com.geekbrains.java.course.beings;
 import com.geekbrains.java.course.actions.Jumpable;
 import com.geekbrains.java.course.actions.Runnable;
 
-public class Human extends Animal implements Runnable, Jumpable {
+public class Human extends Animal {
 
     public Human(String name, int maxLength, int maxHeight) {
         super(name, maxLength, maxHeight);
