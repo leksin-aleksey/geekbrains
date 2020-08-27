@@ -11,11 +11,11 @@ public class Human extends Animal implements Runnable, Jumpable {
 
     @Override
     public void run() {
-        System.out.printf("%s is running%n", name);
+        System.out.printf("%s is running%n", super.getName());
     }
 
     @Override
     public void jump() {
-        System.out.printf("%s is jumping%n", name);
+        System.out.printf("%s is jumping%n", super.getName());
     }
 }

@@ -4,7 +4,7 @@ import com.geekbrains.java.course.actions.Runnable;
 import com.geekbrains.java.course.beings.Being;
 
 public class Treadmill implements Hurdle {
-    private int length;
+    private final int length;
 
     public Treadmill(int length) {
         this.length = length;

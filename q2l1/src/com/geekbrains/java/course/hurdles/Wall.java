@@ -4,7 +4,7 @@ import com.geekbrains.java.course.actions.Jumpable;
 import com.geekbrains.java.course.beings.Being;
 
 public class Wall implements Hurdle {
-    private int height;
+    private final int height;
 
     public Wall(int height) {
         this.height = height;
