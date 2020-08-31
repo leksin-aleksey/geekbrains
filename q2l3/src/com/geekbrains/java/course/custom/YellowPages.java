@@ -3,10 +3,10 @@ package com.geekbrains.java.course.custom;
 import java.util.*;
 
 public class YellowPages {
-    private Map<String, HashSet<String>> map = new HashMap<>();
+    private Map<String, HashSet<PhoneNumber>> map = new HashMap<>();
 
-    public void add(String name, String phone) {
-        HashSet<String> phones = map.get(name);
+    public void add(String name, PhoneNumber phone) {
+        HashSet<PhoneNumber> phones = map.get(name);
 
         if(phones == null){
             phones = new HashSet<>(Arrays.asList(phone));
@@ -18,7 +18,7 @@ public class YellowPages {
         map.put(name, phones);
     }
 
-    public HashSet<String> get(String name) {
+    public HashSet<PhoneNumber> get(String name) {
         return map.get(name);
     }
 }

@@ -1,3 +1,4 @@
+import com.geekbrains.java.course.custom.PhoneNumber;
 import com.geekbrains.java.course.custom.YellowPages;
 
 import java.util.HashMap;
@@ -27,12 +28,13 @@ public class Main {
         //2
         YellowPages yp = new YellowPages();
 
-        yp.add("ivanov", "+123456789");
-        yp.add("petrov", "+234");
-        yp.add("sidorov", "+888");
-        yp.add("sidorov", "+0789");
-        yp.add("ivanov", "+1111");
-        yp.add("sidorov", "+4798965");
+        yp.add("ivanov", new PhoneNumber("+123456789"));
+        yp.add("petrov", new PhoneNumber("+234"));
+        yp.add("sidorov", new PhoneNumber("+888"));
+        yp.add("sidorov", new PhoneNumber("+0789"));
+        yp.add("ivanov", new PhoneNumber("+1111"));
+        yp.add("sidorov", new PhoneNumber("+0789"));
+        yp.add("sidorov", new PhoneNumber("+4798965"));
 
         System.out.println(yp.get("ivanov"));
         System.out.println(yp.get("sidorov"));
