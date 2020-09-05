@@ -3,30 +3,45 @@ package com.geekbrains.java.course.utils;
 import java.util.Arrays;
 
 public class ArrayInit {
-    static final int size = 10000000;
-    static final int h = size / 2;
-    final float[] arr = new float[size];
-    float[] arrPart = new float[h];
+    private static final int size = 10000000;
+    public static final int h = size / 2;
+    private static final float[] arr = new float[size];
+    private static float[] arrParallel = new float[size];
 
-    public ArrayInit(){
+    static {
         for (int i = 0; i < size; i++) {
             arr[i] = 1f;
         }
     }
 
-    public float[] getArray(){
-        return Arrays.copyOf(arr, size);
+    static public float[] getArray(int part){
+        float[] arrPart;
+        switch (part){
+            case -1:
+                return Arrays.copyOf(arr, size);
+            case 0:
+                arrPart = new float[h];
+                System.arraycopy(arr, 0, arrPart, 0, h);
+                return arrPart;
+            case 1:
+                arrPart = new float[h];
+                System.arraycopy(arr, h, arrPart, 0, h);
+                return arrPart;
+            default:
+                throw new IllegalArgumentException();
+        }
     }
 
-    public float[] getArrayPart(int part){
+    public static synchronized void arrParallelCalc(float[] a, int part){
         switch (part){
             case 0:
-                System.arraycopy(arr, 0, arrPart, 0, h);
+                System.arraycopy(a, 0, arrParallel, 0, h);
                 break;
             case 1:
-                System.arraycopy(arr, h, arrPart, 0, h);
+                System.arraycopy(a, 0, arrParallel, h, h);
                 break;
+            default:
+                throw new IllegalArgumentException();
         }
-        return arrPart;
     }
 }
