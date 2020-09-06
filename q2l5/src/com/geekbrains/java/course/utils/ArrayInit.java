@@ -37,6 +37,7 @@ public class ArrayInit {
         switch (type){
             case SINGLE:
                 arrSingle = a;
+                break;
             case PARALLEL1:
                 System.arraycopy(a, 0, arrParallel, 0, h);
                 break;
