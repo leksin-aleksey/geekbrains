@@ -6,6 +6,7 @@ public class ArrayInit {
     private static final int size = 10000000;
     public static final int h = size / 2;
     private static final float[] arr = new float[size];
+    private static float[] arrSingle = new float[size];
     private static float[] arrParallel = new float[size];
 
     static {
@@ -14,16 +15,16 @@ public class ArrayInit {
         }
     }
 
-    static public float[] getArray(int part){
+    static public float[] getArray(CalcTypes type){
         float[] arrPart;
-        switch (part){
-            case -1:
+        switch (type){
+            case SINGLE:
                 return Arrays.copyOf(arr, size);
-            case 0:
+            case PARALLEL1:
                 arrPart = new float[h];
                 System.arraycopy(arr, 0, arrPart, 0, h);
                 return arrPart;
-            case 1:
+            case PARALLEL2:
                 arrPart = new float[h];
                 System.arraycopy(arr, h, arrPart, 0, h);
                 return arrPart;
@@ -32,12 +33,14 @@ public class ArrayInit {
         }
     }
 
-    public static synchronized void arrParallelCalc(float[] a, int part){
-        switch (part){
-            case 0:
+    public static synchronized void arrParallelCalc(float[] a, CalcTypes type){
+        switch (type){
+            case SINGLE:
+                arrSingle = a;
+            case PARALLEL1:
                 System.arraycopy(a, 0, arrParallel, 0, h);
                 break;
-            case 1:
+            case PARALLEL2:
                 System.arraycopy(a, 0, arrParallel, h, h);
                 break;
             default:

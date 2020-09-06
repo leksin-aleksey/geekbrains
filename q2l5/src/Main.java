@@ -1,5 +1,5 @@
 import com.geekbrains.java.course.threads.ArrayCalc;
-import com.geekbrains.java.course.utils.ArrayInit;
+import com.geekbrains.java.course.utils.CalcTypes;
 
 public class Main {
 
@@ -12,7 +12,7 @@ public class Main {
     }
 
     public static void calcInPlain() throws InterruptedException{
-        ArrayCalc arrayCalc = new ArrayCalc(-1);
+        ArrayCalc arrayCalc = new ArrayCalc(CalcTypes.SINGLE);
 
         long startTime = System.currentTimeMillis();
         arrayCalc.run();
@@ -23,8 +23,8 @@ public class Main {
     public static void calcInParallel() throws InterruptedException{
         long startTime = System.currentTimeMillis();
 
-        ArrayCalc arrayCalc2_1 = new ArrayCalc(0);
-        ArrayCalc arrayCalc2_2 = new ArrayCalc(1);
+        ArrayCalc arrayCalc2_1 = new ArrayCalc(CalcTypes.PARALLEL1);
+        ArrayCalc arrayCalc2_2 = new ArrayCalc(CalcTypes.PARALLEL2);
 
         Thread thread1 = new Thread(arrayCalc2_1);
         Thread thread2 = new Thread(arrayCalc2_2);
