@@ -16,17 +16,13 @@ public class ConcurrentChatLinkedList<T> implements Queue<T> {
     }
 
     @Override
-    public boolean add(T t) {
-        synchronized (this) {
-            return list.add(t);
-        }
+    public synchronized boolean add(T t) {
+        return list.add(t);
     }
 
     @Override
-    public T poll(){
-        synchronized (this){
-            return list.poll();
-        }
+    public synchronized T poll(){
+        return list.poll();
     }
 
     @Override
