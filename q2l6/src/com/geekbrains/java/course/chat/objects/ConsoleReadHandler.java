@@ -4,18 +4,18 @@ import java.io.*;
 import java.util.Date;
 import java.util.Queue;
 
-public class MessageReadHandler implements Runnable {
+public class ConsoleReadHandler implements Runnable {
     private Queue<Message> queueNetworkOut;
-    private InputStream inHost;
+    private InputStream hostIn;
 
-    public MessageReadHandler(Queue<Message> queueNetworkOut, InputStream inHost) {
+    public ConsoleReadHandler(Queue<Message> queueNetworkOut, InputStream hostIn) {
         this.queueNetworkOut = queueNetworkOut;
-        this.inHost = inHost;
+        this.hostIn = hostIn;
     }
 
     @Override
     public void run() {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(inHost))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(hostIn))) {
             String str;
             while ((str = br.readLine()) != null) {
                 if (!str.isEmpty()) {

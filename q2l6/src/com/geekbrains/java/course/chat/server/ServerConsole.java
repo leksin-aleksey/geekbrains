@@ -2,21 +2,22 @@ package com.geekbrains.java.course.chat.server;
 
 
 import com.geekbrains.java.course.chat.objects.Message;
-import com.geekbrains.java.course.chat.objects.MessageNetworkHandler;
-import com.geekbrains.java.course.chat.objects.MessageReadHandler;
+import com.geekbrains.java.course.chat.objects.ConsoleNetworkWriteHandler;
+import com.geekbrains.java.course.chat.objects.ConsoleReadHandler;
+import com.geekbrains.java.course.chat.objects.NetworkReadHandler;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class ServerConsole {
 
     private int port;
 
-    private Queue<Message> queueNetworkIn = new ConcurrentLinkedQueue<>();
-    private Queue<Message> queueNetworkOut = new ConcurrentLinkedQueue<>();
+    private Queue<Message> queueNetworkIn = new LinkedBlockingQueue<>();
+    private Queue<Message> queueNetworkOut = new LinkedBlockingQueue<>();
 
     public ServerConsole(int port) {
         this.port = port;
@@ -34,16 +35,21 @@ public class ServerConsole {
             try (Socket socket = serverSocket.accept()){
                 System.out.println("Connected");
 
-                MessageNetworkHandler messageNetworkHandler = new MessageNetworkHandler(queueNetworkIn, queueNetworkOut, System.out, socket);
-                Thread threadNetworkHandler = new Thread(messageNetworkHandler);
+                ConsoleReadHandler consoleReadHandler = new ConsoleReadHandler(queueNetworkOut, System.in);
+                Thread threadConsoleReadHandler = new Thread(consoleReadHandler);
+                threadConsoleReadHandler.start();
+
+                NetworkReadHandler networkReadHandler = new NetworkReadHandler(queueNetworkIn, socket);
+                Thread threadNetworkReadHandler = new Thread(networkReadHandler);
+                threadNetworkReadHandler.start();
+
+                ConsoleNetworkWriteHandler consoleNetworkWriteHandler = new ConsoleNetworkWriteHandler(queueNetworkIn, queueNetworkOut, System.out, socket);
+                Thread threadNetworkHandler = new Thread(consoleNetworkWriteHandler);
                 threadNetworkHandler.start();
 
-                MessageReadHandler messageReadHandler = new MessageReadHandler(queueNetworkOut, System.in);
-                Thread threadReadHandler = new Thread(messageReadHandler);
-                threadReadHandler.start();
-
+                threadConsoleReadHandler.join();
+                threadNetworkReadHandler.join();
                 threadNetworkHandler.join();
-                threadReadHandler.join();
 
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
