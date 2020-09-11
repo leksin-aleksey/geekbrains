@@ -1,9 +1,6 @@
 package com.geekbrains.java.course.chat.client;
 
-import com.geekbrains.java.course.chat.objects.Message;
-import com.geekbrains.java.course.chat.objects.ConsoleNetworkWriteHandler;
-import com.geekbrains.java.course.chat.objects.ConsoleReadHandler;
-import com.geekbrains.java.course.chat.objects.NetworkReadHandler;
+import com.geekbrains.java.course.chat.objects.*;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -14,8 +11,10 @@ public class ClientConsole {
 
     private int port;
 
-    private Queue<Message> queueNetworkIn = new LinkedBlockingQueue<>();
-    private Queue<Message> queueNetworkOut = new LinkedBlockingQueue<>();
+//    private Queue<Message> queueNetworkIn = new LinkedBlockingQueue<>();
+//    private Queue<Message> queueNetworkOut = new LinkedBlockingQueue<>();
+    private Queue<Message> queueNetworkIn = new ConcurrentChatLinkedList<>();
+    private Queue<Message> queueNetworkOut = new ConcurrentChatLinkedList<>();
 
     public ClientConsole(int port) {
         this.port = port;

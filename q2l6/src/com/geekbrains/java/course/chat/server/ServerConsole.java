@@ -1,10 +1,7 @@
 package com.geekbrains.java.course.chat.server;
 
 
-import com.geekbrains.java.course.chat.objects.Message;
-import com.geekbrains.java.course.chat.objects.ConsoleNetworkWriteHandler;
-import com.geekbrains.java.course.chat.objects.ConsoleReadHandler;
-import com.geekbrains.java.course.chat.objects.NetworkReadHandler;
+import com.geekbrains.java.course.chat.objects.*;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -16,8 +13,10 @@ public class ServerConsole {
 
     private int port;
 
-    private Queue<Message> queueNetworkIn = new LinkedBlockingQueue<>();
-    private Queue<Message> queueNetworkOut = new LinkedBlockingQueue<>();
+//    private Queue<Message> queueNetworkIn = new LinkedBlockingQueue<>();
+//    private Queue<Message> queueNetworkOut = new LinkedBlockingQueue<>();
+    private Queue<Message> queueNetworkIn = new ConcurrentChatLinkedList<>();
+    private Queue<Message> queueNetworkOut = new ConcurrentChatLinkedList<>();
 
     public ServerConsole(int port) {
         this.port = port;
