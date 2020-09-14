@@ -12,7 +12,7 @@ import java.net.Socket;
  * Represents client session
  */
 public class ClientHandler {
-    private final long TIMEOUT = 12000;
+    private final long TIMEOUT = 120000;
 
     private String name;
     private Socket socket;
