@@ -37,9 +37,9 @@ public class Server {
         }
     }
 
-    public void sendMessageToClient(String login, String message){
+    public void sendMessage(String username, String message){
         for (ClientHandler ch : clientHandlers) {
-            if (ch.getName().equals(login)){
+            if (ch.getName().equals(username)){
                 ch.sendMessage(message);
                 return;
             }

@@ -135,7 +135,7 @@ public class ClientHandler {
             }
             else if (message.startsWith("/w")){
                 String[] splittedMessageInfo = message.split("\\s");
-                server.sendMessageToClient(splittedMessageInfo[1], splittedMessageInfo[2]);
+                server.sendMessage(splittedMessageInfo[1], splittedMessageInfo[2]);
             }
             else {
                 server.broadcast(formatterMessage);
