@@ -13,26 +13,15 @@ public class ClientApplicationThree {
             DataInputStream in = new DataInputStream(socket.getInputStream());
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
-            //1
-//            try {
-//                Thread.sleep(15000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-
-            String auth = String.format("%s %s %s", args[0], args[1], args[2]);
-            out.writeUTF(auth);
-//            out.writeUTF("-auth l1 p2");
-            new Thread(new Runnable() {
+            out.writeUTF("-auth l3 p3");
+            Thread client = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         while (true) {
+                            //This Client only receives messages
                             String message = in.readUTF();
                             System.out.println(message);
-//                            if (message.contains("Incorrect credentials")) {
-//                                out.writeUTF("-auth l1 p1");
-//                            }
                         }
                     } catch (SocketException e){
                         System.out.println("Logged out");
@@ -40,7 +29,14 @@ public class ClientApplicationThree {
                         e.printStackTrace();
                     }
                 }
-            }).start();
+            });
+            client.start();
+
+            try {
+                client.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             out.writeUTF("-exit");
         } catch (IOException e) {

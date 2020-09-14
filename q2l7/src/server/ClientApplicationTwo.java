@@ -13,27 +13,19 @@ public class ClientApplicationTwo {
             DataInputStream in = new DataInputStream(socket.getInputStream());
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
-            //1
-//            try {
-//                Thread.sleep(15000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-
-            String auth = String.format("%s %s %s", args[0], args[1], args[2]);
-            out.writeUTF(auth);
-//            out.writeUTF("-auth l1 p2");
-            new Thread(new Runnable() {
+            out.writeUTF("-auth l2 p2");
+            Thread client = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         while (true) {
-                            String message = in.readUTF();
-                            System.out.println(message);
-//                            if (message.contains("Incorrect credentials")) {
-//                                out.writeUTF("-auth l1 p1");
-//                            }
-                            String messageOut = String.format("/w %s Привет", "l3");
+                            //This Client just sends messages every 10sec to Client "u3"
+                            try {
+                                Thread.sleep(10000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            String messageOut = String.format("/w %s Привет", "u3");
                             out.writeUTF(messageOut);
                         }
                     } catch (SocketException e){
@@ -42,7 +34,14 @@ public class ClientApplicationTwo {
                         e.printStackTrace();
                     }
                 }
-            }).start();
+            });
+            client.start();
+
+            try {
+                client.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             out.writeUTF("-exit");
         } catch (IOException e) {
