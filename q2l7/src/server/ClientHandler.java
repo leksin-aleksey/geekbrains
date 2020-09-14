@@ -7,12 +7,13 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 /**
  * Represents client session
  */
 public class ClientHandler {
-    private final long TIMEOUT = 120000;
+    private final int TIMEOUT = 120000;
 
     private String name;
     private Socket socket;
@@ -44,7 +45,7 @@ public class ClientHandler {
                     authenticate();
                     readMessage();
                 } catch (LoginTimeoutException e){
-                    System.out.printf("Your session expired due to inactivity.%nPlease log in in %d seconds", TIMEOUT);
+                    System.out.printf("Client session expired due to inactivity.%nPlease log in in %d seconds", TIMEOUT);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
@@ -55,17 +56,19 @@ public class ClientHandler {
     }
 
     public void authenticate() throws LoginTimeoutException, IOException {
+        //1 (timeout)
+        socket.setSoTimeout(TIMEOUT);
         System.out.println("Client auth is on going...");
-        long connectTime = System.currentTimeMillis();
+//        long connectTime = System.currentTimeMillis();
         try {
             while (true) {
 
                 String loginInfo = in.readUTF();
 
-                //1
-                if (System.currentTimeMillis() - connectTime > TIMEOUT) {
-                    throw new LoginTimeoutException();
-                }
+//                //1
+//                if (System.currentTimeMillis() - connectTime > TIMEOUT) {
+//                    throw new LoginTimeoutException();
+//                }
 
                 if (loginInfo.startsWith("-auth")) {
                     // -auth l1 p1
@@ -91,8 +94,14 @@ public class ClientHandler {
                     }
                 }
             }
+        } catch (SocketTimeoutException e){
+            sendMessage("Your session expired due to inactivity.");
+            throw new LoginTimeoutException();
         } catch (IncorrectCredentialsException e){
             sendMessage("Incorrect credentials");
+        }
+        finally {
+            socket.setSoTimeout(0);
         }
     }
 
