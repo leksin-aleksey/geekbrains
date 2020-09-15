@@ -4,4 +4,6 @@ public interface GeekbrainsList <T> {
     boolean add(T t);
 
     boolean remove(T t);
+
+    GeekbrainsIterator<T> iterator();
 }

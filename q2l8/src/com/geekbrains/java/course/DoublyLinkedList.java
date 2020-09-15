@@ -21,26 +21,58 @@ public class DoublyLinkedList<T> implements GeekbrainsList<T>{
 
     @Override
     public boolean remove(T t) {
-        return true;
+        try {
+            head = remove(t, head);
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    private Node<T> add(T t, Node<T> head){
-        Node<T> current = head;
+    @Override
+    public GeekbrainsIterator<T> iterator() {
+        return new DoublyIterator();
+    }
+
+    private Node<T> add(T t, Node<T> node){
+        Node<T> current = node;
         if (current == null){
             current = new Node<>(null, null, t);
             return current;
         }
         else if (current.getNext() != null) {
             current = current.getNext();
-            head.setNext(add(t, current));
-            return head;
+            node.setNext(add(t, current));
+            return node;
         }
         else {
             current.setNext(new Node<>(current, null, t));
-            return head;
+            return node;
         }
     }
 
+    private Node<T> remove(T t, Node<T> node){
+        if (node == null){
+            return null;
+        }
+        else if (node.getElem().equals(t)){
+            if (node.getPrev() != null){
+                node.getPrev().setNext(node.getNext());
+            }
+            if (node.getNext() != null){
+                node.getNext().setPrev(node.getPrev());
+            }
+            return node.getNext();
+        }
+        else if (node.getNext() == null){
+            return node;
+        }
+        else {
+            node.setNext(remove(t, node.getNext()));
+            return node;
+        }
+    }
 
     @Override
     public String toString() {
@@ -88,6 +120,30 @@ public class DoublyLinkedList<T> implements GeekbrainsList<T>{
 
         public T getElem() {
             return t;
+        }
+    }
+
+    private class DoublyIterator implements GeekbrainsIterator<T>{
+        private Node<T> current;
+
+        public DoublyIterator() {
+            current = new Node<>(null, head, null);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return current.getNext() != null;
+        }
+
+        @Override
+        public T next() {
+            if (current != null){
+                current = current.getNext();
+                return current.getElem();
+            }
+            else {
+                return null;
+            }
         }
     }
 }
