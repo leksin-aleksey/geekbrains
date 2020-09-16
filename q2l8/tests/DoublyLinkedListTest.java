@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class DoublyLinkedListTest {
 
     private DoublyLinkedList<String> doubly;
-    private String result;
 
     @org.junit.jupiter.api.Test
     void add() {
@@ -76,7 +75,7 @@ class DoublyLinkedListTest {
     void iterator() {
         GeekbrainsIterator<String> iterator;
         doubly = new DoublyLinkedList<>();
-        result = "";
+        String result = "";
         iterator = doubly.iterator();
         while (iterator.hasNext()){
             result = String.join(",", result, iterator.next());
