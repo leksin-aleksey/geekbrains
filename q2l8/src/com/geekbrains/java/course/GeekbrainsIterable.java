@@ -1,6 +1,6 @@
 package com.geekbrains.java.course;
 
 
-public interface GeekBrainsIterable<T> {
+public interface GeekbrainsIterable<T> {
     GeekbrainsIterator<T> iterator();
 }
