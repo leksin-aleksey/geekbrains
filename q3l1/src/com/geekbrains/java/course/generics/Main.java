@@ -20,7 +20,6 @@ import com.geekbrains.java.course.generics.containers.Box;
 import com.geekbrains.java.course.generics.fruits.Apple;
 import com.geekbrains.java.course.generics.fruits.Orange;
 import com.geekbrains.java.course.generics.utils.ArrayUtils;
-import com.sun.org.apache.xpath.internal.operations.Or;
 
 import java.util.ArrayList;
 import java.util.Arrays;
