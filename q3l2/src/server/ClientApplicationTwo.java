@@ -1,10 +1,13 @@
 package server;
 
+import client.History;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.List;
 
 public class ClientApplicationTwo {
     public static void main(String[] args) {
@@ -13,11 +16,13 @@ public class ClientApplicationTwo {
             DataInputStream in = new DataInputStream(socket.getInputStream());
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
-            out.writeUTF("-auth l1_NEW p2");
+            out.writeUTF("-auth l1_NEW2 p2");
             Thread client = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
+                        printHistory();
+
                         while (true) {
                             //This Client just sends messages every 10sec to Client "u3"
                             try {
@@ -47,6 +52,14 @@ public class ClientApplicationTwo {
             out.writeUTF("-exit");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void printHistory(){
+        History history = new History();
+        List<String> historyLog = history.getHistory();
+        for (String line : historyLog) {
+            System.out.println(line);
         }
     }
 }
