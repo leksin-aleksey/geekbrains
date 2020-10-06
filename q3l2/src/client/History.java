@@ -8,8 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class History {
-    private static String FILE_HISTORY = "history.txt";
-    private static int MAX_LINES = 100;
+    private static final String FILE_HISTORY = "history.txt";
+    private static final int MAX_LINES = 100;
 
     List<String> history = new LinkedList<>();
 
@@ -17,9 +17,7 @@ public class History {
         File historyFile = new File(FILE_HISTORY);
 
         try {
-            if (!historyFile.exists()){
-                historyFile.createNewFile();
-            } else {
+            if (!historyFile.createNewFile()){
                 try (BufferedReader br = new BufferedReader(new FileReader(historyFile))){
                     String line;
                     int counter = 0;
