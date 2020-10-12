@@ -1,46 +1,64 @@
 package client;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class History {
-    private static final String FILE_HISTORY = "history.txt";
-    private static final int MAX_LINES = 100;
+    private static final String FILE_HISTORY_NAME = "history.txt";
+    private static final int MAX_LINES_STARTUP = 100;
 
-    List<String> history = new LinkedList<>();
+    private final File historyFile;
+
+    List<String> history;
 
     public History() {
-        File historyFile = new File(FILE_HISTORY);
-
+        historyFile = new File(FILE_HISTORY_NAME);
         try {
-            if (!historyFile.createNewFile()){
-                try (BufferedReader br = new BufferedReader(new FileReader(historyFile))){
-                    String line;
-                    int counter = 0;
-                    while ((line = br.readLine()) != null && counter++ < MAX_LINES){
-                        history.add(line);
-                    }
-                }
-            }
+            historyFile.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static String getFileHistory() {
-        return FILE_HISTORY;
+    public static String getFileHistoryName() {
+        return FILE_HISTORY_NAME;
     }
 
-    public static int getMaxLines() {
-        return MAX_LINES;
+    public static int getMaxLinesStartup() {
+        return MAX_LINES_STARTUP;
     }
 
     public List<String> getHistory() {
         return history;
     }
 
+    public List<String> readAtStartup(){
+        return read(MAX_LINES_STARTUP);
+    }
+
+    public List<String> read(int num){
+        history = new LinkedList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(historyFile))){
+            String line;
+            int counter = 0;
+            while ((line = br.readLine()) != null && counter++ < num){
+                history.add(line);
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return history;
+    }
+
+    public boolean write(String s){
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(historyFile))){
+            bw.write("\n");
+            bw.write(s);
+            return true;
+        } catch (IOException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
