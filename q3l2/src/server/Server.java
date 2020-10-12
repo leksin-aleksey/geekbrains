@@ -23,6 +23,8 @@ public class Server {
     }
 
     private void start(int port) {
+        ServerStartupPrinting serverStartupPrinting = new ServerStartupPrinting();
+        serverStartupPrinting.print();
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             listenClients(serverSocket);
         } catch (IOException e) {
