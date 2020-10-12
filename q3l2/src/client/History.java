@@ -1,6 +1,7 @@
 package client;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,17 +39,24 @@ public class History {
     }
 
     public List<String> read(int num){
-        history = new LinkedList<>();
+        history = new ArrayList<>();
+        LinkedList<String> historyLast = new LinkedList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(historyFile))){
             String line;
-            int counter = 0;
-            while ((line = br.readLine()) != null && counter++ < num){
+            while ((line = br.readLine()) != null){
                 history.add(line);
             }
         } catch (IOException e){
             e.printStackTrace();
         }
-        return history;
+        if (history.size() <= num) {
+            return history;
+        } else{
+            for (int i = history.size() - num; i < history.size(); i++) {
+                historyLast.add(history.get(i));
+            }
+        }
+        return historyLast;
     }
 
     public boolean write(String s){
