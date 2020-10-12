@@ -57,7 +57,7 @@ public class ClientApplicationTwo {
 
     private static void printHistory(){
         History history = new History();
-        List<String> historyLog = history.getHistory();
+        List<String> historyLog = history.readAtStartup();
         for (String line : historyLog) {
             System.out.println(line);
         }
