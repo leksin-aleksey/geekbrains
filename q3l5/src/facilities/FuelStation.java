@@ -35,4 +35,21 @@ public class FuelStation {
         }
         vehicle.fillUp();
     }
+
+    public float fillUp(float amount) throws InterruptedException{
+        //5
+        Semaphore semaphore = new Semaphore(3, true);
+        semaphore.acquire();
+        try{
+            synchronized (this) {
+                Thread.sleep(FILL_UP_TIME);
+                storage -= amount;
+            }
+        } catch (InterruptedException e){
+            throw new InterruptedException("exception inside synchronized block");
+        } finally {
+            semaphore.release();
+        }
+        return amount;
+    }
 }

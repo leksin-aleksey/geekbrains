@@ -31,14 +31,11 @@ public class Car extends Vehicle{
     public void run() {
         while (true){
             //6
+            System.out.println(getRegistrationPlate() + " is driving");
             drive();
             if(getFuelLevel() == 0){
-                FuelStation fuelStation = FuelStationManager.getInstance().getFuelStation();
-                try {
-                    fuelStation.fillUp(this);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                System.out.printf("%s is filling up%n", registrationPlate);
+                fillUp();
             }
         }
     }
@@ -65,7 +62,12 @@ public class Car extends Vehicle{
 
     @Override
     public void fillUp() {
-        fuelLevel = tankCapacity;
+        FuelStation fuelStation = FuelStationManager.getInstance().getFuelStation();
+        try {
+            fuelLevel += fuelStation.fillUp(tankCapacity - fuelLevel);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -79,6 +81,7 @@ public class Car extends Vehicle{
             //2
             Thread.sleep(3000L);
             fuelLevel = Math.max(fuelLevel - MPG_DEFAULT, 0);
+            System.out.printf("%s fuel level: %f%n", getRegistrationPlate(), getFuelLevel());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
