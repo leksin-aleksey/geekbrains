@@ -22,11 +22,17 @@ public class FuelStation {
         //5
         Semaphore semaphore = new Semaphore(3, true);
         semaphore.acquire();
-        synchronized (this) {
-            Thread.sleep(FILL_UP_TIME);
-            storage -= vehicle.getTankCapacity();
+        try{
+            synchronized (this) {
+                Thread.sleep(FILL_UP_TIME);
+                System.out.println(vehicle.getRegistrationPlate() + " is filling up");
+                storage -= vehicle.getTankCapacity();
+            }
+        } catch (InterruptedException e){
+            throw new InterruptedException("exception inside synchronized block");
+        } finally {
+            semaphore.release();
         }
-        semaphore.release();
         vehicle.fillUp();
     }
 }
