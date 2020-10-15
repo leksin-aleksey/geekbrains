@@ -26,6 +26,7 @@ public class FuelStation {
             Thread.sleep(FILL_UP_TIME);
             storage -= vehicle.getTankCapacity();
         }
+        semaphore.release();
         vehicle.fillUp();
     }
 }
