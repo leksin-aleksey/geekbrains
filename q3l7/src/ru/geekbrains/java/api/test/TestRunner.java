@@ -62,7 +62,6 @@ public class TestRunner {
                     methodAfterSuite = method;
                 } else if (a.annotationType() == Test.class){
                     Test testAnnotation = (Test) a;
-                    /*TODO test method order*/
                     List<Method> list;
                     if (!methodsOrder.containsKey(testAnnotation.order())){
                         list = new LinkedList<>();
