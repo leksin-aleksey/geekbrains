@@ -17,7 +17,6 @@ public class TestRunner {
     private static Map<Integer, List<Method>> methodsOrder = new TreeMap<>();
 
     public static void main(String[] args) throws Exception{
-//        CustomTest1 test1 = new CustomTest1();
         start(CustomTest1.class);
     }
 
@@ -62,15 +61,16 @@ public class TestRunner {
                 } else if (a.annotationType() == AfterSuite.class){
                     methodAfterSuite = method;
                 } else if (a.annotationType() == Test.class){
+                    Test testAnnotation = (Test) a;
                     /*TODO test method order*/
                     List<Method> list;
-                    if (!methodsOrder.containsKey(1)){
+                    if (!methodsOrder.containsKey(testAnnotation.order())){
                         list = new LinkedList<>();
                     } else {
-                        list = methodsOrder.get(1);
+                        list = methodsOrder.get(testAnnotation.order());
                     }
                     list.add(method);
-                    methodsOrder.put(1, list);
+                    methodsOrder.put(testAnnotation.order(), list);
                 }
             }
         }
@@ -78,20 +78,17 @@ public class TestRunner {
 
     private static void runMethods(Object object) throws Exception{
         if (methodBeforeSuite != null){
-            /*TODO parameters*/
-            methodBeforeSuite.invoke(object, "");
+            methodBeforeSuite.invoke(object);
         }
 
         for (Map.Entry<Integer, List<Method>> entry : methodsOrder.entrySet()){
-            /*TODO parameters*/
             for(Method method : entry.getValue()){
                 method.invoke(object);
             }
         }
 
         if (methodAfterSuite != null){
-            /*TODO parameters*/
-            methodAfterSuite.invoke(object,"");
+            methodAfterSuite.invoke(object);
         }
     }
 }

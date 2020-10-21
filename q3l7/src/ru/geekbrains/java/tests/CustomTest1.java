@@ -8,22 +8,32 @@ public class CustomTest1 {
     public CustomTest1(){}
 
     @BeforeSuite
-    public void doFirst(String s){
-        System.out.println("prepare");
+    public void doFirst(){
+        System.out.println("do prepare");
     }
 
-    @Test
+    @Test(order = 5)
     public void doTest1(){
-        System.out.println("test1");
+        System.out.println("do test1");
     }
 
     @Test
     public void doTest2(){
-        System.out.println("test2");
+        System.out.println("do test2");
+    }
+
+    @Test(order = 10)
+    public void doTest3(){
+        System.out.println("do test3");
+    }
+
+    @Test(order = 5)
+    public void doTest4(){
+        System.out.println("do test4");
     }
 
     @AfterSuite
-    public void doLast(String s){
-        System.out.println("finish");
+    public void doLast(){
+        System.out.println("do finish");
     }
 }
