@@ -6,6 +6,8 @@ public class ArrayUtils {
     private static final int CHECK_NUMBER_1 = 1;
     private static final int CHECK_NUMBER_2 = 4;
 
+    private ArrayUtils() {
+    }
 
     public static int[] trimArrayByFour(int[] arr){
         int i = arr.length;
