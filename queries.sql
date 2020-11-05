@@ -1,17 +1,16 @@
-/*Не удалось импортировать данные по geodata, по схеме примерно такие запросы должны получиться*/
 /*1. Сделать запрос, в котором мы выберем все данные о городе – регион, страна.*/
 select ci.title, co.title, r.title
   from _cities ci
-  join _countries co on co.country_id = ci.country_id
-  join _regions r on r.region_id = ci.region_id
- where ci.city_id = 1001;
+  join _countries co on co.id = ci.country_id
+  join _regions r on r.id = ci.region_id
+ where ci.id = 1;
 
 /*2. Выбрать все города из Московской области.*/
 select ci.title
   from _cities ci
-  join _countries co on co.country_id = ci.country_id
-  join _regions r on r.region_id = ci.region_id
- where co.title = 'Российская Федерация'
+  join _countries co on co.id = ci.country_id
+  join _regions r on r.id = ci.region_id
+ where co.title = 'Россия'
    and r.title = 'Московская область';
 
 /*1. Выбрать среднюю зарплату по отделам.*/
